@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace Day01
@@ -49,32 +47,6 @@ namespace Day01
             var subject = new CalculatesFuelFromMass();
             // subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(3173518); //Part One answer
             subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(4757427); // Part Two answer
-        }
-    }
-
-    public class CalculatesFuelFromMass
-    {
-        public decimal Calculate(decimal mass)
-        {
-            decimal result = 0;
-            result += Math.Floor(mass / 3) - 2;
-            if (Math.Floor(result / 3) - 2 > 0)
-            {
-                result += Calculate(result);
-            }
-            return result;
-        }
-
-        public decimal ParseFile(string fileName)
-        {
-            var modules = File.ReadAllLines(fileName);
-            decimal result = 0;
-            foreach (var module in modules)
-            {                
-                result += Calculate(int.Parse(module));
-            }
-
-            return result;
         }
     }
 }
