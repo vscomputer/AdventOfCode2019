@@ -48,7 +48,7 @@ namespace Day01
         {
             var subject = new CalculatesFuelFromMass();
             // subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(3173518); //Part One answer
-            subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(4757427);
+            subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(4757427); // Part Two answer
         }
     }
 
