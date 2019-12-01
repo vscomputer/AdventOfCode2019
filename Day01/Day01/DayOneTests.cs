@@ -43,7 +43,12 @@ namespace Day01
             subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\fakeInput.txt").Should().Be(7);
         }
 
-        
+        [Test]
+        public void ParseFile_RealInput_FuelIsTheAnswer()
+        {
+            var subject = new CalculatesFuelFromMass();
+            subject.ParseFile("C:\\Projects\\Homework\\AdventOfCode2019\\Day01\\input.txt").Should().Be(3173518);
+        }
     }
 
     public class CalculatesFuelFromMass
@@ -58,7 +63,7 @@ namespace Day01
             var modules = File.ReadAllLines(fileName);
             decimal result = 0;
             foreach (var module in modules)
-            {
+            {                
                 result += Calculate(int.Parse(module));
             }
 
