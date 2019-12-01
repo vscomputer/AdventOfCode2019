@@ -7,7 +7,7 @@ namespace Day01
     public class DayOneTests
     {
         [Test]
-        public void Test1()
+        public void Calculate_MassIs12_FuelIs2()
         {
             Assert.True(true);
         }
