@@ -31,6 +31,21 @@ namespace Day02
             _subject.Compute(input);
             _subject.IsFinished().Should().BeTrue("because when it hits a 99 it should be finished");
         }
+
+        [Test]
+        public void Compute_99IsAtLaterPosition_IsFinished()
+        {
+            var input = new List<int> {1, 0, 0, 0, 99};
+            _subject.Compute(input);
+            _subject.IsFinished().Should().BeTrue("it should move forward from a legit opcode");
+        }
+
+        [Test]
+        [Ignore("this is next")]
+        public void Compute_AddOperator1_SumIsPlacedAtCorrectPosition()
+        {
+            var input = new List<int> {1, 0, 0, 0, 99};
+        }
     }
 
     public class IntcodeComputer
