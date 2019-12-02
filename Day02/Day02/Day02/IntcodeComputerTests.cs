@@ -47,6 +47,14 @@ namespace Day02
             _subject.Compute(input);
             _subject.GetValueAtPosition(0).Should().Be(2);
         }
+
+        [Test]
+        public void Compute_AddOperator1AtSecondPosition_SumIsPlacedAtCorrectPosition()
+        {
+            var input = new List<int> {1, 0, 0, 0, 1, 4, 4, 4, 99};
+            _subject.Compute(input);
+            _subject.GetValueAtPosition(4).Should().Be(2);
+        }
     }
 
     public class IntcodeComputer
