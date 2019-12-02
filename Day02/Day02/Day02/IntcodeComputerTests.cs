@@ -9,6 +9,15 @@ namespace Day02
     public class IntcodeComputerTests
     {
         [Test]
+        public void Compute_NeverHits99_IsNotFinished()
+        {
+            var subject = new IntcodeComputer();
+            var input = new List<int> {0,0,0};
+            subject.Compute(input);
+            subject.IsFinished().Should().BeFalse("it should only finish on a 99");
+        }
+        
+        [Test]
         public void Compute_Hits99_IsFinished()
         {
             var subject = new IntcodeComputer();
@@ -20,14 +29,22 @@ namespace Day02
 
     public class IntcodeComputer
     {
+        private bool _isFinished;
+
+        public IntcodeComputer()
+        {
+            _isFinished = false;
+        }
+        
         public void Compute(List<int> input)
         {
-            throw new NotImplementedException();
+            if (input[0] == 99)
+                _isFinished = true;
         }
 
         public bool IsFinished()
         {
-            throw new NotImplementedException();
+            return _isFinished;
         }
     }
 }
