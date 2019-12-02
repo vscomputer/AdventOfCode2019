@@ -86,19 +86,28 @@ namespace Day02
             _codes = input;
             int i = 0;
             while (_isFinished == false)
-            {                
-                if (_codes[i] == 99)
+            {
+                operation = _codes[i];
+                if (operation == 99)
                 {
                     _isFinished = true;
                     break;
                 }
-
-                operation = _codes[i];
+                    
                 m = _codes[i + 1];
                 n = _codes[i + 2];
                 resultPosition = _codes[i + 3];
-                _codes[resultPosition] = _codes[m] + _codes[n];
-
+                switch (operation)
+                {                    
+                    case 1:
+                        _codes[resultPosition] = _codes[m] + _codes[n];
+                        break;
+                    case 2:
+                        _codes[resultPosition] = _codes[m] * _codes[n];
+                        break;
+                    default:
+                        throw new ArgumentException();
+                }                                                               
                 i += OpcodeLength;
             }
         }
