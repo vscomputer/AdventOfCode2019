@@ -55,6 +55,14 @@ namespace Day02
             _subject.Compute(input);
             _subject.GetValueAtPosition(4).Should().Be(2);
         }
+        
+        [Test]
+        public void Compute_MultiplyOperator2_ProductIsPlacedAtCorrectPosition()
+        {
+            var input = new List<int> {2, 3, 0, 3, 99};
+            _subject.Compute(input);
+            _subject.GetValueAtPosition(3).Should().Be(6);
+        }
     }
 
     public class IntcodeComputer
