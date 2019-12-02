@@ -52,6 +52,7 @@ namespace Day02
     {
         private const int OpcodeLength = 4;
         private bool _isFinished;
+        private List<int> _codes;
 
         public IntcodeComputer()
         {
@@ -60,10 +61,11 @@ namespace Day02
         
         public void Compute(List<int> input)
         {
+            _codes = input;
             int i = 0;
             while (_isFinished == false)
             {
-                if (input[i] == 99)
+                if (_codes[i] == 99)
                     _isFinished = true;
 
                 i += OpcodeLength;
@@ -77,7 +79,7 @@ namespace Day02
 
         public int GetValueAtPosition(int position)
         {
-            throw new NotImplementedException();
+            return _codes[position];
         }
     }
 }
