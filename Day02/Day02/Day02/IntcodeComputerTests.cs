@@ -17,10 +17,9 @@ namespace Day02
         }
         
         [Test]
-        public void Compute_NeverHits99_IsNotFinished()
+        public void Compute_InitialState_IsNotFinished()
         {
             var input = new List<int> {0,0,0};
-            _subject.Compute(input);
             _subject.IsFinished().Should().BeFalse("it should only finish on a 99");
         }
         
@@ -50,6 +49,7 @@ namespace Day02
 
     public class IntcodeComputer
     {
+        private const int OpcodeLength = 4;
         private bool _isFinished;
 
         public IntcodeComputer()
@@ -59,8 +59,14 @@ namespace Day02
         
         public void Compute(List<int> input)
         {
-            if (input[0] == 99)
-                _isFinished = true;
+            int i = 0;
+            while (_isFinished == false)
+            {
+                if (input[i] == 99)
+                    _isFinished = true;
+
+                i += OpcodeLength;
+            }
         }
 
         public bool IsFinished()
