@@ -40,10 +40,11 @@ namespace Day02
         }
 
         [Test]
-        [Ignore("this is next")]
         public void Compute_AddOperator1_SumIsPlacedAtCorrectPosition()
         {
             var input = new List<int> {1, 0, 0, 0, 99};
+            _subject.Compute(input);
+            _subject.GetValueAtPosition(0).Should().Be(2);
         }
     }
 
@@ -72,6 +73,11 @@ namespace Day02
         public bool IsFinished()
         {
             return _isFinished;
+        }
+
+        public int GetValueAtPosition(int position)
+        {
+            throw new NotImplementedException();
         }
     }
 }
