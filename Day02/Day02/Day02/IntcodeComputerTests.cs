@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -61,12 +62,26 @@ namespace Day02
         
         public void Compute(List<int> input)
         {
+            int operation;
+            int m;
+            int n;
+            int resultPosition;
+            
             _codes = input;
             int i = 0;
             while (_isFinished == false)
-            {
+            {                
                 if (_codes[i] == 99)
+                {
                     _isFinished = true;
+                    break;
+                }
+
+                operation = _codes[i];
+                m = _codes[i + 1];
+                n = _codes[i + 2];
+                resultPosition = _codes[i + 3];
+                _codes[resultPosition] = _codes[m] + _codes[n];
 
                 i += OpcodeLength;
             }
