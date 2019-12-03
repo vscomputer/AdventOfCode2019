@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -94,7 +95,33 @@ namespace Day02
                 castInput.Add(int.Parse(token));
             }
             _subject.Compute(castInput);
+            Debug.WriteLine("0: " + _subject.GetValueAtPosition(0) + " noun: " + castInput[1] + " verb: " + castInput[2]);
             _subject.GetValueAtPosition(0).Should().Be(5434663);
+        }
+
+        [Test]
+        public void PartTwo_IterateAcrossNounsAndVerbs_GetsNounAndVerb()
+        {
+            var input = File.ReadAllText("C:\\Projects\\Homework\\AdventOfCode2019-PuzzleInput\\day-2-input.txt")
+                .Split(',').ToList();
+            for (int noun = 0; noun < 99; noun++)
+            {
+                for (int verb = 0; verb < 99; verb++)
+                {
+                    var castInput = new List<int>();
+                    foreach (var token in input)
+                    {
+                        castInput.Add(int.Parse(token));
+                    }
+
+                    castInput[1] = noun;
+                    castInput[2] = verb;
+                    _subject.Compute(castInput);
+                    _subject.GetValueAtPosition(0).Should().NotBe(19690720, "noun is " + noun + " and verb is " + verb);
+                    Debug.WriteLine("0: " + _subject.GetValueAtPosition(0) + " noun: " + castInput[1] + " verb: " + castInput[2]);
+                }
+            }
+            throw new Exception("shouldn't have gotten here, never hit the target value!");
         }
     }
 
@@ -115,6 +142,7 @@ namespace Day02
             int m;
             int n;
             int resultPosition;
+            _isFinished = false;
             
             _codes = input;
             int i = 0;
