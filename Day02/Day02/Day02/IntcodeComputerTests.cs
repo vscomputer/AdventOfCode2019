@@ -71,6 +71,15 @@ namespace Day02
             _subject.Compute(input);
             _subject.GetValueAtPosition(5).Should().Be(9801);
         }
+        
+        [Test]
+        public void Compute_InterplayBetweenTwoOpcodes_CorrectValueAtBothPositions()
+        {
+            var input = new List<int> {1, 1, 1, 4, 99, 5, 6, 0, 99};
+            _subject.Compute(input);
+            _subject.GetValueAtPosition(0).Should().Be(30);
+            _subject.GetValueAtPosition(4).Should().Be(2);
+        }
     }
 
     public class IntcodeComputer
