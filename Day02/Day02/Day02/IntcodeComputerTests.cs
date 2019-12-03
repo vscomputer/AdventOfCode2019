@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using FluentAssertions;
 using NUnit.Framework;
@@ -79,6 +81,20 @@ namespace Day02
             _subject.Compute(input);
             _subject.GetValueAtPosition(0).Should().Be(30);
             _subject.GetValueAtPosition(4).Should().Be(2);
+        }
+
+        [Test]
+        public void Compute_RealInputFilePartOne_CorrectAnswerAtPositionZero()
+        {
+            var input = File.ReadAllText("C:\\Projects\\Homework\\AdventOfCode2019-PuzzleInput\\day-2-input-part-1.txt")
+                .Split(',').ToList();
+            var castInput = new List<int>();
+            foreach (var token in input)
+            {
+                castInput.Add(int.Parse(token));
+            }
+            _subject.Compute(castInput);
+            _subject.GetValueAtPosition(0).Should().Be(5434663);
         }
     }
 
