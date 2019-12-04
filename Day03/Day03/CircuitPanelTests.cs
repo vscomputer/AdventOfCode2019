@@ -58,20 +58,38 @@ namespace Day03
                 _subject.GetWire1().Any(t => t.Item1 == 3 && t.Item2 == i).Should().BeTrue();
             }
         }
+
+        [Test]
+        public void MarkWire2_CommaSeparatedList_2TotalIntersections()
+        {
+            var input1 = "R8,U5,L5,D3";
+            _subject.MarkWire1(input1);
+            var input2 = "U7,R6,D4,L4";
+            _subject.MarkWire2(input2);
+            _subject.GetIntersections().Count.Should().Be(2);
+        }
         
     }
 
     public class CircuitPanel
     {
         private readonly List<Tuple<int, int>> _wire1;
+        private readonly List<Tuple<int, int>> _intersections;
         private Tuple<int, int> _currentPosition;
+
 
         public CircuitPanel()
         {
             _wire1 = new List<Tuple<int, int>>();
-            _currentPosition = new Tuple<int, int>(0,0);
+            _intersections = new List<Tuple<int, int>>();
+            _currentPosition = new Tuple<int, int>(0, 0);
         }
-        
+
+        public List<Tuple<int, int>> GetIntersections()
+        {
+            return _intersections;
+        }
+
         public void MarkWire1(string wireMoves)
         {
             foreach (var move in wireMoves.Split(','))
@@ -121,6 +139,11 @@ namespace Day03
         public List<Tuple<int,int>> GetWire1()
         {
             return _wire1;
+        }
+
+        public void MarkWire2(string input)
+        {
+            throw new NotImplementedException();
         }
     }
 }
