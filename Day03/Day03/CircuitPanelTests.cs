@@ -36,13 +36,34 @@ namespace Day03
             }
         }
 
-        
+        [Test]
+        public void MarkWire1_CommaSeparatedAllDirections_CorrectPositionsMarked()
+        {
+            var input = "R8,U5,L5,D3";
+            _subject.MarkWire1(input);
+            for (int i = 1; i <= 8; i++)
+            {
+                _subject.GetWire1().Any(t => t.Item1 == i && t.Item2 == 0).Should().BeTrue();
+            }
+            for (int i = -1; i >= -5; i--)
+            {
+                _subject.GetWire1().Any(t => t.Item1 == 8 && t.Item2 == i).Should().BeTrue();
+            }
+            for (int i = 8; i >= 3; i--)
+            {
+                _subject.GetWire1().Any(t => t.Item1 == i && t.Item2 == -5).Should().BeTrue();
+            }
+            for (int i = -5; i <= -2; i++)
+            {
+                _subject.GetWire1().Any(t => t.Item1 == 3 && t.Item2 == i).Should().BeTrue();
+            }
+        }
         
     }
 
     public class CircuitPanel
     {
-        private List<Tuple<int, int>> _wire1;
+        private readonly List<Tuple<int, int>> _wire1;
         private Tuple<int, int> _currentPosition;
 
         public CircuitPanel()
@@ -51,7 +72,15 @@ namespace Day03
             _currentPosition = new Tuple<int, int>(0,0);
         }
         
-        public void MarkWire1(string move)
+        public void MarkWire1(string wireMoves)
+        {
+            foreach (var move in wireMoves.Split(','))
+            {
+                MarkWire1Step(move);
+            }            
+        }
+
+        private void MarkWire1Step(string move)
         {
             var x = _currentPosition.Item1;
             var y = _currentPosition.Item2;
@@ -71,11 +100,22 @@ namespace Day03
                         _wire1.Add(new Tuple<int, int>(x, y-i));
                     }
                     break;
+                case 'L':
+                    for (int i = 0; i <= steps; i++)
+                    {
+                        _wire1.Add(new Tuple<int, int>(x-i,y));
+                    }
+                    break;
+                case 'D':
+                    for (int i = 0; i <= steps; i++)
+                    {
+                        _wire1.Add(new Tuple<int, int>(x, y+i));
+                    }
+                    break;
                 default:
                     throw new ArgumentException("that direction isn't supported!");
             }
             _currentPosition = _wire1.Last();
-            
         }
 
         public List<Tuple<int,int>> GetWire1()
