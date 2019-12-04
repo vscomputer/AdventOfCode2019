@@ -7,23 +7,36 @@ using NUnit.Framework;
 namespace Day03
 {
     public class CircuitPanelTests
-    {        
+    {
+        private CircuitPanel _subject;
         [SetUp]
         public void Setup()
         {
+            _subject = new CircuitPanel();
         }
 
         [Test]
         public void MarkWire1_R8_Marks8PointsToTheRight()
         {
-            var subject = new CircuitPanel();
-            subject.MarkWire1("R8");
+            _subject.MarkWire1("R8");
             for (int i = 1; i <= 8; i++)
             {
-                subject.GetWire1().Any(t => t.Item1 == i && t.Item2 == 0).Should().BeTrue();
-            }
-            
+                _subject.GetWire1().Any(t => t.Item1 == i && t.Item2 == 0).Should().BeTrue();
+            }            
         }
+
+        [Test]
+        public void MarkWire1_U5AfterR8_Marks5Points8ToTheRight()
+        {
+            _subject.MarkWire1("R8");
+            _subject.MarkWire1("U5");
+            for (int i = -1; i >= -5; i--)
+            {
+                _subject.GetWire1().Any(t => t.Item1 == 8 && t.Item2 == i).Should().BeTrue();
+            }
+        }
+
+        
         
     }
 
@@ -50,12 +63,18 @@ namespace Day03
                     for (int i = 1; i <= steps; i++)
                     {
                         _wire1.Add(new Tuple<int, int>(x+i, y));
+                    }                    
+                    break;
+                case 'U':
+                    for (int i = 1; i <= steps; i++)
+                    {
+                        _wire1.Add(new Tuple<int, int>(x, y-i));
                     }
-                    _currentPosition = _wire1.Last();
                     break;
                 default:
                     throw new ArgumentException("that direction isn't supported!");
             }
+            _currentPosition = _wire1.Last();
             
         }
 
