@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Tests
+namespace Day03
 {
     public class CircuitPanelTests
     {        
@@ -24,18 +24,44 @@ namespace Tests
             }
             
         }
+        
     }
 
     public class CircuitPanel
     {
+        private List<Tuple<int, int>> _wire1;
+        private Tuple<int, int> _currentPosition;
+
+        public CircuitPanel()
+        {
+            _wire1 = new List<Tuple<int, int>>();
+            _currentPosition = new Tuple<int, int>(0,0);
+        }
+        
         public void MarkWire1(string move)
         {
-            throw new System.NotImplementedException();
+            var x = _currentPosition.Item1;
+            var y = _currentPosition.Item2;
+            char direction = move[0];
+            int steps = int.Parse(move.Substring(1));
+            switch (direction)
+            {
+                case 'R':
+                    for (int i = 1; i <= steps; i++)
+                    {
+                        _wire1.Add(new Tuple<int, int>(x+i, y));
+                    }
+                    _currentPosition = _wire1.Last();
+                    break;
+                default:
+                    throw new ArgumentException("that direction isn't supported!");
+            }
+            
         }
 
         public List<Tuple<int,int>> GetWire1()
         {
-            throw new System.NotImplementedException();
+            return _wire1;
         }
     }
 }
