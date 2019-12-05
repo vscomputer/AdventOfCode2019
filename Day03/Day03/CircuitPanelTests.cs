@@ -67,6 +67,16 @@ namespace Day03
             _subject.MarkWire2(input2);
             _subject.GetIntersections().Count.Should().Be(2);
         }
+
+        [Test]
+        public void GetManhattanDistance_SimpleScenario_Returns6()
+        {
+            var input1 = "R8,U5,L5,D3";
+            _subject.MarkWire1(input1);
+            var input2 = "U7,R6,D4,L4";
+            _subject.MarkWire2(input2);
+            _subject.GetManhattanDistance().Should().Be(6);
+        }
         
     }
 
@@ -205,6 +215,10 @@ namespace Day03
         {
             return _wire1;
         }
-        
+
+        public int GetManhattanDistance()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
