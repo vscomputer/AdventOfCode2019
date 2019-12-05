@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -96,6 +97,17 @@ namespace Day03
             var input2 = "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7";
             _subject.MarkWire2(input2);
             _subject.GetManhattanDistance().Should().Be(135);
+        }
+
+        [Test]
+        public void GetManhattanDistance_RealInput_ReturnsTheAnswerToPartOne()
+        {
+            var inputs = File.ReadLines("C:\\Projects\\Homework\\AdventOfCode2019-PuzzleInput\\day-3-input.txt")
+                .ToList();
+
+            _subject.MarkWire1(inputs[0]);
+            _subject.MarkWire2(inputs[1]);
+            _subject.GetManhattanDistance().Should().Be(489);
         }
         
     }
