@@ -145,5 +145,10 @@ namespace Day03
             return _intersections.Select(position => Math.Abs(position.Item1) + Math.Abs(position.Item2))
                 .Min();
         }
+
+        public int GetShortestWireDistance()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
