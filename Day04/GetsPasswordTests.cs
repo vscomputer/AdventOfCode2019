@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Day04
@@ -9,15 +10,20 @@ namespace Day04
         {
         }
 
-//        [Test]
-//        public void OnlyAscends_Ascending_ReturnsTrue()
-//        {
-//            var subject = new GetsPassword();
-//            subject.OnlyAscends
-//        }
+        [TestCase("123456")]
+        [TestCase("111111")]
+        public void OnlyAscends_Ascending_ReturnsTrue(string input)
+        {
+            var subject = new GetsPassword();
+            subject.OnlyAscends(input).Should().BeTrue();
+        }
     }
 
     public class GetsPassword
     {
+        public bool OnlyAscends(string input)
+        {
+            return true;
+        }
     }
 }
