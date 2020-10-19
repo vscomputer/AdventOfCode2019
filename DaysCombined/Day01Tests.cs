@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace DaysCombined
 {
     [TestFixture]
-    public class Tests
+    public class Day01Tests
     {
         [Test]
         public void Test1()
