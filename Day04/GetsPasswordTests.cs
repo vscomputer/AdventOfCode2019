@@ -24,6 +24,11 @@ namespace Day04
 
         [TestCase("123456", false)]
         [TestCase("112345", true)]
+        [TestCase("112233", true)]
+        [TestCase("123444", false)]
+        [TestCase("111122", true)]
+        [TestCase("112222", true)]
+        [TestCase("333444", false)]
         public void ContainsAdjacentDigits_DoesNotContainAdjacentDigits_ReturnsBool(string input, bool answer) =>
             _subject.ContainsAdjacentDigits(input).Should().Be(answer);
 
@@ -61,11 +66,13 @@ namespace Day04
 
         public bool ContainsAdjacentDigits(string input)
         {
+            string pairPartner;
             for (int i = input.Length -1; i > 0; i--)
             {
                 if (int.Parse(input[i].ToString()) == int.Parse(input[i-1].ToString()))
                 {
-                    return true;
+                    pairPartner = input[i].ToString();
+                    return !input.Substring(0, i -1).Contains(input[i].ToString()) || ContainsAdjacentDigits(input.Substring(0, i-1));
                 }
             }
 
