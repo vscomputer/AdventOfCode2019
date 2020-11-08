@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -10,10 +13,11 @@ namespace DaysCombined
     {
         //1,0,0,0,99 becomes 2,0,0,0,99 (1 + 1 = 2)
         [Test]
+        //[Ignore("still need a bit of parsing")]
         public void RunsOpcodes_FirstTestInput_Returns2()
         {
             var subject = new RunsOpcodes(new ParsesOpcodeStrings());
-            subject.Run("1,0,0,0,99").Should().Be(2);
+            subject.Run("1,0,0,0,99").Should().Be("2,0,0,0,99");
         }
 
         [Test]
@@ -23,6 +27,14 @@ namespace DaysCombined
             List<decimal> result = subject.Parse("1,0,0,0,99");
             result.Count.Should().Be(5);
         }
+
+        [Test]
+        public void ParsesOpcodeStrings_ListofCodes_ParsedBackIntoText()
+        {
+            var subject = new ParsesOpcodeStrings();
+            var input = new List<decimal> {0, 1, 2, 3};
+            subject.Parse(input).Should().Be("0,1,2,3");
+        }
     }
 
     public class ParsesOpcodeStrings
@@ -31,6 +43,17 @@ namespace DaysCombined
         {
             var splitString = opcodeString.Split(',');
             return splitString.Select(decimal.Parse).ToList();
+        }
+
+        public string Parse(List<decimal> opcodes)
+        {
+            var result = new StringBuilder();
+            foreach (var opcode in opcodes)
+            {
+                result.Append(opcode.ToString(CultureInfo.InvariantCulture) + ",");
+            }
+
+            return result.Remove(result.Length - 1, 1).ToString(); //gotta remove that last comma
         }
     }
 
@@ -42,10 +65,11 @@ namespace DaysCombined
             _parsesOpcodeStrings = new ParsesOpcodeStrings();
         }
 
-        public decimal Run(string opcodeString)
+        public string Run(string opcodeString)
         {
             var opcodes = _parsesOpcodeStrings.Parse(opcodeString);
-            return opcodes[(int)opcodes[1]] + opcodes[(int)opcodes[2]];
+            opcodes[(int)opcodes[3]] = opcodes[(int)opcodes[1]] + opcodes[(int)opcodes[2]];
+            return _parsesOpcodeStrings.Parse(opcodes);
         }
     }
 }
