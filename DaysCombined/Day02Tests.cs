@@ -13,7 +13,6 @@ namespace DaysCombined
     {
         //1,0,0,0,99 becomes 2,0,0,0,99 (1 + 1 = 2)
         [Test]
-        //[Ignore("still need a bit of parsing")]
         public void RunsOpcodes_FirstTestInput_Returns2()
         {
             var subject = new RunsOpcodes(new ParsesOpcodeStrings());
@@ -29,12 +28,21 @@ namespace DaysCombined
         }
 
         [Test]
-        public void ParsesOpcodeStrings_ListofCodes_ParsedBackIntoText()
+        public void ParsesOpcodeStrings_ListOfCodes_ParsedBackIntoText()
         {
             var subject = new ParsesOpcodeStrings();
             var input = new List<decimal> {0, 1, 2, 3};
             subject.Parse(input).Should().Be("0,1,2,3");
         }
+
+        //2,3,0,3,99 becomes 2,3,0,6,99 (3 * 2 = 6).
+        [Test]
+        public void RunsOpcodes_Multiply_ReturnsExpectedString()
+        {
+            var subject = new RunsOpcodes(new ParsesOpcodeStrings());
+            subject.Run("2,3,0,3,99").Should().Be("2,3,0,6,99");
+        }
+        
     }
 
     public class ParsesOpcodeStrings
@@ -68,7 +76,15 @@ namespace DaysCombined
         public string Run(string opcodeString)
         {
             var opcodes = _parsesOpcodeStrings.Parse(opcodeString);
-            opcodes[(int)opcodes[3]] = opcodes[(int)opcodes[1]] + opcodes[(int)opcodes[2]];
+            if (opcodes[0] == 1)
+            {
+                opcodes[(int) opcodes[3]] = opcodes[(int) opcodes[1]] + opcodes[(int) opcodes[2]];
+            }
+            else if (opcodes[0] == 2)
+            {
+                opcodes[(int) opcodes[3]] = opcodes[(int) opcodes[1]] * opcodes[(int) opcodes[2]];
+            }
+
             return _parsesOpcodeStrings.Parse(opcodes);
         }
     }
