@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -42,50 +39,30 @@ namespace DaysCombined
             var subject = new RunsOpcodes(new ParsesOpcodeStrings());
             subject.Run("2,3,0,3,99").Should().Be("2,3,0,6,99");
         }
+
+        //2,4,4,5,99,0 becomes 2,4,4,5,99,9801 (99 * 99 = 9801).
+        [Test]
+        public void RunsOpcodes_MultiplyTwo_ReturnsExpectedString()
+        {
+            var subject = new RunsOpcodes(new ParsesOpcodeStrings());
+            subject.Run("2,4,4,5,99,0").Should().Be("2,4,4,5,99,9801");
+        }
         
-    }
-
-    public class ParsesOpcodeStrings
-    {
-        public List<decimal> Parse(string opcodeString)
+        //1,1,1,4,99,5,6,0,99 becomes 30,1,1,4,2,5,6,0,99.
+        [Test]
+        public void RunsOpcodes_MultipleOpcodes_ReturnsExpectedString()
         {
-            var splitString = opcodeString.Split(',');
-            return splitString.Select(decimal.Parse).ToList();
+            var subject = new RunsOpcodes(new ParsesOpcodeStrings());
+            subject.Run("1,1,1,4,99,5,6,0,99").Should().Be("30,1,1,4,2,5,6,0,99");
         }
 
-        public string Parse(List<decimal> opcodes)
+        [Test]
+        public void RunsOpcodes_Day2Part1_ReturnsTheAnswer()
         {
-            var result = new StringBuilder();
-            foreach (var opcode in opcodes)
-            {
-                result.Append(opcode.ToString(CultureInfo.InvariantCulture) + ",");
-            }
-
-            return result.Remove(result.Length - 1, 1).ToString(); //gotta remove that last comma
+            var input = File.ReadAllText(@"C:\Projects\Homework\AdventOfCode2019-PuzzleInput\day-2-input-part-1.txt");
+            var subject = new RunsOpcodes(new ParsesOpcodeStrings());
+            subject.Run(input).Should().StartWith("5434663");
         }
-    }
-
-    public class RunsOpcodes
-    {
-        private readonly ParsesOpcodeStrings _parsesOpcodeStrings;
-        public RunsOpcodes(ParsesOpcodeStrings parsesOpcodeStrings)
-        {
-            _parsesOpcodeStrings = new ParsesOpcodeStrings();
-        }
-
-        public string Run(string opcodeString)
-        {
-            var opcodes = _parsesOpcodeStrings.Parse(opcodeString);
-            if (opcodes[0] == 1)
-            {
-                opcodes[(int) opcodes[3]] = opcodes[(int) opcodes[1]] + opcodes[(int) opcodes[2]];
-            }
-            else if (opcodes[0] == 2)
-            {
-                opcodes[(int) opcodes[3]] = opcodes[(int) opcodes[1]] * opcodes[(int) opcodes[2]];
-            }
-
-            return _parsesOpcodeStrings.Parse(opcodes);
-        }
+        
     }
 }
