@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -34,6 +36,28 @@ namespace DaysCombined
             var subject = new ModuleFuelFinder();
             var result = subject.CalculateFuel(1969);
             result.Should().Be(966);
+        }
+
+        [Test]
+        public void ModuleFuelFinder_CalculateFuelWithFuelTakenIntoAccount_fakeInput_ShouldBe968()
+        {
+            var subject = new ModuleFuelFinder();
+            var lines = File.ReadAllLines(
+                "C:\\Projects\\Homework\\AdventOfCode2019-PuzzleInput\\input-day-01-fake.txt");
+            var finalResult = lines.Sum(line => subject.CalculateFuel(int.Parse(line)));
+
+            finalResult.Should().Be(968);
+        }
+
+        [Test]
+        public void ModuleFuelFinder_CalculateFuelWithFuelTakenIntoAccount_realInput_ShouldBeTheAnswer()
+        {
+            var subject = new ModuleFuelFinder();
+            var lines = File.ReadAllLines(
+                "C:\\Projects\\Homework\\AdventOfCode2019-PuzzleInput\\input.txt");
+            var finalResult = lines.Sum(line => subject.CalculateFuel(int.Parse(line)));
+
+            finalResult.Should().Be(4757427);
         }
     }
 
