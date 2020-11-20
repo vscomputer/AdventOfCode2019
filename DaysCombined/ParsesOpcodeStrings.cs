@@ -20,8 +20,12 @@ namespace DaysCombined
             {
                 result.Append(opcode.ToString(CultureInfo.InvariantCulture) + ",");
             }
+            if(result[result.Length-1] == ',' )
+                return result.Remove(result.Length - 1, 1).ToString(); //gotta remove that last comma
+            
+            return result.ToString();
 
-            return result.Remove(result.Length - 1, 1).ToString(); //gotta remove that last comma
+            
         }
     }
 }

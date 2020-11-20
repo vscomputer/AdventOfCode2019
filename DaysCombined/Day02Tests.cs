@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -62,6 +63,27 @@ namespace DaysCombined
             var input = File.ReadAllText(@"C:\Projects\Homework\AdventOfCode2019-PuzzleInput\day-2-input-part-1.txt");
             var subject = new RunsOpcodes(new ParsesOpcodeStrings());
             subject.Run(input).Should().StartWith("5434663");
+        }
+
+        [Test]
+        public void RunsOpcodes_Day2Part2_FailsOnTheAnswer()
+        {
+            var parser = new ParsesOpcodeStrings();
+            var subject = new RunsOpcodes(parser);
+            var input = File.ReadAllText(@"C:\Projects\Homework\AdventOfCode2019-PuzzleInput\day-2-input-part-1.txt");
+            var codes = parser.Parse(input);
+            for (int noun = 0; noun < 100; noun++)
+            {
+                for (int verb = 0; verb < 100; verb++)
+                {
+                    var codeArray = codes.ToArray();
+                    codeArray[1] = noun;
+                    codeArray[2] = verb;
+                    
+                    subject.Run(codeArray.ToList()).Should().NotStartWith("19690720");
+                }
+            }
+            
         }
         
     }

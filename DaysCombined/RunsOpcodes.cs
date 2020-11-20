@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace DaysCombined
 {
     public class RunsOpcodes
@@ -8,10 +10,9 @@ namespace DaysCombined
             _parsesOpcodeStrings = new ParsesOpcodeStrings();
         }
 
-        public string Run(string opcodeString)
+        public string Run(List<decimal> opcodes)
         {
             int currentIndex = 0;
-            var opcodes = _parsesOpcodeStrings.Parse(opcodeString);
             while (opcodes[0 + currentIndex] != 99)
             {
                 switch (opcodes[0 + currentIndex])
@@ -25,8 +26,13 @@ namespace DaysCombined
                 }
                 currentIndex += 4;
             }
-
             return _parsesOpcodeStrings.Parse(opcodes);
+        }
+
+        public string Run(string opcodeString)
+        {
+            var opcodes = _parsesOpcodeStrings.Parse(opcodeString);
+            return Run(opcodes);
         }
     }
 }
